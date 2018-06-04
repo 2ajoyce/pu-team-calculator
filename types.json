@@ -1,0 +1,219 @@
+{
+    "attack_effectiveness_by_type": {
+        "Normal": {
+            "2x": ["Nuclear"],
+            "0.5x": ["Rock", "Steel"],
+            "0x": ["Ghost"]
+        },
+        "Fire": {
+            "2x": ["Grass", "Ice", "Bug", "Steel", "Nuclear"],
+            "0.5x": ["Fire", "Water", "Rock", "Dragon"],
+            "0x": []
+        },
+        "Water": {
+            "2x": ["Fire", "Ground", "Rock", "Nuclear"],
+            "0.5x": ["Water", "Grass", "Dragon"],
+            "0x": []
+        },
+        "Electric": {
+            "2x": ["Water", "Flying", "Nuclear"],
+            "0.5x": ["Electric", "Grass", "Dragon"],
+            "0x": ["Ground"]
+        },
+        "Grass": {
+            "2x": ["Water", "Ground", "Rock", "Nuclear"],
+            "0.5x": ["Fire", "Grass", "Poison", "Flying", "Bug", "Dragon", "Steel"],
+            "0x": []
+        },
+        "Ice": {
+            "2x": ["Grass", "Ground", "Flying", "Dragon", "Nuclear"],
+            "0.5x": ["Fire", "Water", "Ice", "Steel"],
+            "0x": []
+        },
+        "Fighting": {
+            "2x": ["Normal", "Ice", "Rock", "Dark", "Steel", "Nuclear"],
+            "0.5x": ["Poison", "Flying", "Psychic", "Bug", "Fairy"],
+            "0x": ["Ghost"]
+        },
+        "Poison": {
+            "2x": ["Grass", "Fairy", "Nuclear"],
+            "0.5x": ["Poison", "Ground", "Rock", "Ghost"],
+            "0x": ["Steel"]
+        },
+        "Ground": {
+            "2x": ["Fire", "Electric", "Poison", "Nuclear"],
+            "0.5x": ["Grass", "Bug"],
+            "0x": ["Flying"]
+        },
+        "Flying": {
+            "2x": ["Grass", "Fighting", "Bug", "Nuclear"],
+            "0.5x": ["Electric", "Rock", "Steel"],
+            "0x": []
+        },
+        "Psychic": {
+            "2x": ["Fighting", "Poison", "Nuclear"],
+            "0.5x": ["Psychic", "Steel"],
+            "0x": ["Dark"]
+        },
+        "Bug": {
+            "2x": ["Grass", "Psychic", "Dark", "Nuclear"],
+            "0.5x": ["Fire", "Fighting", "Poison", "Flying", "Ghost", "Steel", "Fairy"],
+            "0x": []
+        },
+        "Rock": {
+            "2x": ["Fire", "Ice", "Flying", "Bug", "Nuclear"],
+            "0.5x": ["Fighting", "Ground", "Steel"],
+            "0x": []
+        },
+        "Ghost": {
+            "2x": ["Psychic", "Ghost", "Nuclear"],
+            "0.5x": ["Dark"],
+            "0x": ["Normal"]
+        },
+        "Dragon": {
+            "2x": ["Dragon", "Nuclear"],
+            "0.5x": ["Steel"],
+            "0x": ["Fairy"]
+        },
+        "Dark": {
+            "2x": ["Psychic", "Ghost", "Nuclear"],
+            "0.5x": ["Fighting", "Dark", "Fairy"],
+            "0x": []
+        },
+        "Steel": {
+            "2x": ["Ice", "Fairy", "Nuclear"],
+            "0.5x": ["Fire", "Water", "Electric", "Steel"],
+            "0x": []
+        },
+        "Fairy": {
+            "2x": ["Fighting", "Dragon", "Dark", "Nuclear"],
+            "0.5x": ["Fire", "Poison", "Steel"],
+            "0x": []
+        },
+        "Nuclear": {
+            "2x": ["Normal",
+                "Fire", "Fighting", "Water", "Flying", "Grass", "Poison", "Electric", "Ground", "Psychic", "Rock", "Ice", "Bug", "Dragon", "Ghost", "Dark", "Fairy"
+            ],
+            "0.5x": ["Nuclear", "Steel"],
+            "0x": []
+        }
+    },
+    "defense_effectiveness_by_type": {
+        "Rock": {
+            "0.5x": ["Normal", "Fire", "Poison", "Flying"],
+            "2x": ["Water", "Grass", "Fighting"]
+        },
+        "Steel": {
+            "0.5x": ["Normal",
+                "Grass",
+                "Ice",
+                "Flying",
+                "Psychic",
+                "Bug",
+                "Rock",
+                "Dragon",
+                "Steel",
+                "Fairy"
+            ],
+            "2x": ["Fire", "Fighting"],
+            "0x": ["Poison"]
+        },
+        "Ghost": {
+            "0x": ["Normal", "Fighting"],
+            "0.5x": ["Poison", "Bug"],
+            "2x": ["Ghost", "Dark"]
+        },
+        "Grass": {
+            "2x": ["Fire", "Ice", "Poison", "Flying", "Bug"],
+            "0.5x": ["Water", "Electric", "Grass", "Ground"]
+        },
+        "Ice": {
+            "2x": ["Fire", "Fighting", "Rock", "Steel"],
+            "0.5x": ["Ice"]
+        },
+        "Bug": {
+            "2x": ["Fire", "Flying", "Rock"],
+            "0.5x": ["Grass", "Fighting", "Ground"]
+        },
+        "Fire": {
+            "0.5x": ["Fire", "Grass", "Ice", "Bug", "Steel", "Fairy"],
+            "2x": ["Water", "Ground", "Rock"]
+        },
+        "Water": {
+            "0.5x": ["Fire", "Water", "Ice", "Steel"],
+            "2x": ["Electric", "Grass"]
+        },
+        "Dragon": {
+            "0.5x": ["Fire", "Water", "Electric", "Grass"],
+            "2x": ["Ice", "Dragon", "Fairy"]
+        },
+        "Ground": {
+            "2x": ["Water", "Grass", "Ice"],
+            "0x": ["Electric"],
+            "0.5x": ["Poison", "Rock"]
+        },
+        "Flying": {
+            "2x": ["Electric", "Ice", "Rock"],
+            "0.5x": ["Grass", "Fighting", "Bug"],
+            "0x": ["Ground"]
+        },
+        "Electric": {
+            "0.5x": ["Electric", "Flying", "Steel"],
+            "2x": ["Ground"]
+        },
+        "Poison": {
+            "0.5x": ["Grass", "Fighting", "Poison", "Bug", "Fairy"],
+            "2x": ["Ground", "Psychic"]
+        },
+        "Normal": {
+            "2x": ["Fighting"],
+            "0x": ["Ghost"]
+        },
+        "Dark": {
+            "2x": ["Fighting", "Bug", "Fairy"],
+            "0x": ["Psychic"],
+            "0.5x": ["Ghost", "Dark"]
+        },
+        "Psychic": {
+            "0.5x": ["Fighting", "Psychic"],
+            "2x": ["Bug", "Ghost", "Dark"]
+        },
+        "Fairy": {
+            "0.5x": ["Fighting", "Bug", "Dark"],
+            "2x": ["Poison", "Steel"],
+            "0x": ["Dragon"]
+        },
+        "Fighting": {
+            "2x": ["Flying", "Psychic", "Fairy"],
+            "0.5x": ["Bug", "Rock", "Dark"]
+        },
+        "Nuclear": {
+            "2x": ["Normal", "Fire", "Fighting", "Water", "Flying", "Grass", "Electric", "Ground", "Psychic",
+                "Rock", "Ice", "Bug", "Dragon", "Ghost", "Dark", "Steel", "Fairy", "Poison"
+            ],
+            "0.5x": ["Nuclear"],
+            "0x": []
+        }
+    },
+    "types": [
+        "Normal",
+        "Fire",
+        "Water",
+        "Electric",
+        "Grass",
+        "Ice",
+        "Fighting",
+        "Poison",
+        "Ground",
+        "Flying",
+        "Psychic",
+        "Bug",
+        "Rock",
+        "Ghost",
+        "Dragon",
+        "Dark",
+        "Steel",
+        "Fairy",
+        "Nuclear"
+    ]
+}
