@@ -1,4 +1,5 @@
 import helpers = require('./helpers.js');
+let log = (x) => console.log(x);
 
 const readJson = helpers.ReadJson;
 const readCsv = helpers.ReadCsv;
@@ -14,30 +15,55 @@ function calculateTypesList(types: any, pokemon: any): void {
     typesData = types;
     pokemonData = pokemon;
     // This function can be proven correct by the formula (6+19-1)!/(6!*(19-1)!)
-    trampoline(thunkedFactorialize.bind(
-        this,
-        typesData.types,
-        [0, 0, 0, 0, 0, 0],
-        calculateOptimalTypes
-    ));
+    // trampoline(thunkedFactorialize.bind(
+    //     this,
+    //     typesData.types,
+    //     [0, 0, 0, 0, 0, 0],
+    //     calculateOptimalTypes
+    // ));
+    
+    enumerateTypes();
+}
+function enumerateTypes() {
+    log('Enumerating Types');
+
+    log(iterativeFactorialize([1, 2, 3], 2));
+}
+
+function iterativeFactorialize<T>(n: Array<T>, r: number): Array<T> {
+    let sets = [];
+    let iterations = r^r;
+    log(iterations);
+    for(let i=0; i<iterations; i++) {
+        log(i);
+    }
+
+    return sets;
 }
 
 function calculateOptimalTypes(typesList: Array<Array<string>>) {
     console.log('Sorting combinations by max strength / min weakness.');
-    let teamTypes = [];
-    let swScore = 0;
+    let teamTypes: Array<Array<string>> = [];
+    let swScore = [];
     typesList.forEach(t => {
         let tempScore = calculateSWScore(t);
-        if(tempScore > swScore) {
-            teamTypes = t;
-            swScore = tempScore;
+        if (teamTypes.length === 0 || tempScore > swScore[0]) {
+            teamTypes.push(t);
+            swScore.push(tempScore);
+            if(teamTypes.length > 10 && swScore.length > 10) {
+                teamTypes = teamTypes.slice(1, 11);
+                swScore = swScore.slice(1, 11);
+            }
         }
     });
-    let teamStrengths = calculateStrengths(teamTypes);
-    let teamWeaknesses = calculateWeaknesses(teamTypes);
+    // teamTypes = teamTypes.slice(teamTypes.length - 11);
+    console.log(teamTypes);
+    console.log(swScore);
+    let teamStrengths = calculateStrengths(teamTypes[teamTypes.length-1]);
+    let teamWeaknesses = calculateWeaknesses(teamTypes[teamTypes.length-1]);
 
     // IF YOU WOULD LIKE TO CALCULATE UNHANDLED STATS FOR A CUSTOM TEAM INSERT THEM HERE AND UN-COMMENT ThESE LINES
-    // teamTypes = ['Fire', 'Ground', 'Bug', 'Fairy', 'Fighting', 'Rock', 'Flying'];
+    // teamTypes = [['Fire', 'Ground', 'Bug', 'Fairy', 'Fighting', 'Rock', 'Flying']];
     // teamStrengths = calculateStrengths(data, types);
 
     const unhandledTypes = typesData.types.filter(x => !teamStrengths.find(y => x === y));
@@ -47,7 +73,7 @@ function calculateOptimalTypes(typesList: Array<Array<string>>) {
         finishingTouches[type] = typesData.defense_effectiveness_by_type[type]['2x'];
     });
 
-    console.log('Strongest Team Comp:', teamTypes);
+    console.log('Strongest Team Comp:', teamTypes[teamTypes.length]);
     console.log('Strengths:', teamStrengths);
     console.log('Weaknesses:', teamWeaknesses);
     console.log('Unhandled Types:', unhandledTypes);
