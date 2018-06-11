@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const helpers = require("./helpers.js");
+const mathjs = require("mathjs");
 let log = (x) => console.log(x);
+let factorial = (x) => mathjs.factorial(x);
 const readJson = helpers.ReadJson;
 const readCsv = helpers.ReadCsv;
 readJson('./types.json', (err, typesData) => {
@@ -14,48 +16,29 @@ let pokemonData;
 function calculateTypesList(types, pokemon) {
     typesData = types;
     pokemonData = pokemon;
-    // This function can be proven correct by the formula (6+19-1)!/(6!*(19-1)!)
-    // trampoline(thunkedFactorialize.bind(
-    //     this,
-    //     typesData.types,
-    //     [0, 0, 0, 0, 0, 0],
-    //     calculateOptimalTypes
-    // ));
-    enumerateTypes();
+    let enumeratedTypes = iterativeFactorial(typesData.types, 5);
+    calculateOptimalTypes(enumeratedTypes);
 }
-function enumerateTypes() {
-    log('Enumerating Types');
-    log(iterativeFactorialize([1, 2, 3], 2));
-}
-function iterativeFactorialize(n, r) {
-    let sets = [];
-    let iterations = r ^ r;
-    log(iterations);
-    for (let i = 0; i < iterations; i++) {
-        log(i);
-    }
-    return sets;
-}
-function calculateOptimalTypes(typesList) {
-    console.log('Sorting combinations by max strength / min weakness.');
+function calculateOptimalTypes(enumeratedTypes) {
+    console.log('Sorting combinations by max strength / min weakness.', '\n');
     let teamTypes = [];
-    let swScore = [];
-    typesList.forEach(t => {
+    enumeratedTypes.forEach(t => {
         let tempScore = calculateSWScore(t);
-        if (teamTypes.length === 0 || tempScore > swScore[0]) {
-            teamTypes.push(t);
-            swScore.push(tempScore);
-            if (teamTypes.length > 10 && swScore.length > 10) {
-                teamTypes = teamTypes.slice(1, 11);
-                swScore = swScore.slice(1, 11);
+        if (teamTypes.length === 0 || tempScore > calculateSWScore(teamTypes[teamTypes.length - 1])) {
+            if (teamTypes.length < 10) {
+                teamTypes.push(t);
             }
+            else {
+                teamTypes[9] = t;
+            }
+            teamTypes.sort((a, b) => calculateSWScore(a) > calculateSWScore(b) ? -1 : 1);
         }
     });
-    // teamTypes = teamTypes.slice(teamTypes.length - 11);
-    console.log(teamTypes);
-    console.log(swScore);
-    let teamStrengths = calculateStrengths(teamTypes[teamTypes.length - 1]);
-    let teamWeaknesses = calculateWeaknesses(teamTypes[teamTypes.length - 1]);
+    console.log('Top Ten Teams [Score : Team]');
+    teamTypes.forEach((team, i) => console.log(calculateSWScore(team), ':', team));
+    console.log('\n');
+    let teamStrengths = calculateStrengths(teamTypes[0]);
+    let teamWeaknesses = calculateWeaknesses(teamTypes[0]);
     // IF YOU WOULD LIKE TO CALCULATE UNHANDLED STATS FOR A CUSTOM TEAM INSERT THEM HERE AND UN-COMMENT ThESE LINES
     // teamTypes = [['Fire', 'Ground', 'Bug', 'Fairy', 'Fighting', 'Rock', 'Flying']];
     // teamStrengths = calculateStrengths(data, types);
@@ -65,54 +48,38 @@ function calculateOptimalTypes(typesList) {
         finishingTouches[type] = [];
         finishingTouches[type] = typesData.defense_effectiveness_by_type[type]['2x'];
     });
-    console.log('Strongest Team Comp:', teamTypes[teamTypes.length]);
-    console.log('Strengths:', teamStrengths);
-    console.log('Weaknesses:', teamWeaknesses);
-    console.log('Unhandled Types:', unhandledTypes);
-    console.log('Ways to handle them:');
+    console.log('Strongest Team Comp:', teamTypes[0], '\n');
+    console.log('Strengths:', teamStrengths, '\n');
+    console.log('Weaknesses:', teamWeaknesses, '\n');
+    console.log('Unhandled Types:', unhandledTypes, '\n');
+    console.log('Ways to handle them:', '\n');
     console.log(finishingTouches);
 }
-function thunkedFactorialize(items, indexes, cb) {
-    return factorialize.bind(this, [], items, indexes, cb);
-    function factorialize(combinations, items, indexes, cb) {
-        combinations.push([
-            items[indexes[0]],
-            items[indexes[1]],
-            items[indexes[2]],
-            items[indexes[3]],
-            items[indexes[4]],
-            items[indexes[5]]
-        ]);
-        let total = ((items.length - 1) * indexes.length);
-        if (indexes.reduce((accumulator, currentValue) => accumulator + currentValue) < total) {
-            increment(indexes, 0, items.length - 1, false);
-            return factorialize.bind(this, combinations, items, indexes, cb);
-        }
-        else {
-            console.log('Found', combinations.length, 'combinations of 6 types.');
-            cb(combinations);
-            return null;
-        }
+// This function can be proven correct for n choose r by the formula (r+n-1)!/(r!*(n-1)!)
+function iterativeFactorial(n, r) {
+    let sets = [];
+    let key = [];
+    for (let i = 0; i < r; i++) {
+        key.push(0);
     }
-}
-function trampoline(fn) {
-    var op = fn;
-    while (op != null && typeof op === 'function') {
-        op = op();
-    }
-}
-function increment(indexes, start, max, rollover) {
-    if (indexes[start] < max) {
-        indexes[start]++;
-        if (rollover) {
-            for (let i = 0; i < start; i++) {
-                indexes[i] = indexes[start];
+    let getIterations = (n, r) => factorial(r + n - 1) / (factorial(r) * factorial(n - 1));
+    for (let i = 0; i < getIterations(n.length, r); i++) {
+        for (let j = r; j >= 0; j--) {
+            if (key[j] < j) {
+                key[j]++;
+                for (let k = j; k < r; k++) {
+                    key[k] = key[j];
+                }
+                break;
             }
         }
+        let set = [];
+        for (let l = 0; l < key.length; l++) {
+            set.push(n[key[l]]);
+        }
+        sets.push(set);
     }
-    else if (start < indexes.length) {
-        increment(indexes, start + 1, max, true);
-    }
+    return sets;
 }
 function calculateSWScore(types) {
     return calculateStrengths(types).length - calculateWeaknesses(types).length;
